@@ -1,6 +1,7 @@
 package pl.sda.racing;
 
 import org.junit.jupiter.api.Test;
+import pl.sda.racing.importer.RaceDataReader;
 
 import java.io.IOException;
 import java.util.List;

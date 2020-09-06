@@ -1,8 +1,12 @@
-package pl.sda.racing;
+package pl.sda.racing.importer;
+
+import pl.sda.racing.Pigeon;
+import pl.sda.racing.Result;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collector;
@@ -37,11 +41,13 @@ public class RaceDataReader {
         return Pigeon.builder().birdId(splitLine[2]).name(splitLine[3]).owner(splitLine[1]).build();
     }
 
-    public List<Result> readListOfResults() {
+    public List<ResultDTO> readListOfResults() {
 
     }
 
-    private Result asResult(String[] splitLine) {
-        return Result.builder().pigeon().race().time().build());
+
+    private ResultDTO asResult(String[] splitLine) {
+        asPigeon(splitLine);
+        return ResultDTO.builder().identifier(splitLine[2]).time(Duration.parse()splitLine[7]).build();
     }
 }
