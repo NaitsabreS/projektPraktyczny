@@ -11,7 +11,7 @@ class ReaderFileTest {
     @Test
     void shouldAsPigeon() throws IOException {
 //given
-        RaceDataReader readerFile = new RaceDataReader("C:\\Users\\Sebastian\\IdeaProjects\\javawwa30-projekt-praktyczny\\src\\test\\resources\\onePigeon.csv");
+        RaceDataReader readerFile = new RaceDataReader("src/test/resources/onePigeon.csv");
 //when
         List<Pigeon> pigeons = readerFile.getAllPigeons();
 //then

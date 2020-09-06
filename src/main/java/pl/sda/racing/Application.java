@@ -28,7 +28,6 @@ public class Application {
 
         List<Pigeon> pigeons = readerFile.getAllPigeons();
 
-
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
 
@@ -36,11 +35,8 @@ public class Application {
         ) {
             session.save(pigeon);
         }
-
         transaction.commit();
         session.close();
-        //sessionFactory.close();
-
     }
 
     public static void main(String[] args) throws IOException {
