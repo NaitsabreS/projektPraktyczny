@@ -1,12 +1,18 @@
 package pl.sda.racing;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Duration;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Result {
     @Id
     @GeneratedValue
@@ -18,11 +24,7 @@ public class Result {
     //@JoinColumn(name = "race_id")
     private Race race;
 
-    //private Duration time;
-
-
-
-    
+    private Duration time;
 
 
 }

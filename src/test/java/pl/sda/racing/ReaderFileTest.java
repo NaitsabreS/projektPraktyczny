@@ -1,6 +1,7 @@
 package pl.sda.racing;
 
 import org.junit.jupiter.api.Test;
+import pl.sda.racing.importer.RaceDataReader;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,7 +12,7 @@ class ReaderFileTest {
     @Test
     void shouldAsPigeon() throws IOException {
 //given
-        RaceDataReader readerFile = new RaceDataReader("C:\\Users\\Sebastian\\IdeaProjects\\javawwa30-projekt-praktyczny\\src\\test\\resources\\onePigeon.csv");
+        RaceDataReader readerFile = new RaceDataReader("src/test/resources/onePigeon.csv");
 //when
         List<Pigeon> pigeons = readerFile.getAllPigeons();
 //then
