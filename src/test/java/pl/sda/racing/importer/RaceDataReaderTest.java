@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RaceDataReaderTest {
     @Test
-    void shouldReadAllResultsWithoutHeader() {
+    void shouldReadAllResultsWithoutHeader() throws IOException {
 //given
         String filepath = "src/test/resources/pigeon-racing.csv";
         RaceDataReader raceDataReader = new RaceDataReader(filepath);
@@ -35,7 +35,7 @@ class RaceDataReaderTest {
     }
 
     @Test
-    void shouldTwoPigeonsTimeBeRelated() {
+    void shouldTwoPigeonsTimeBeRelated() throws IOException {
         //given
         String filepath = "src/test/resources/pigeon-racing.csv";
         RaceDataReader raceDataReader = new RaceDataReader(filepath);

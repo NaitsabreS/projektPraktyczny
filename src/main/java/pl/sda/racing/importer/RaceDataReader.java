@@ -7,9 +7,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Duration;
-import java.util.LinkedList;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class RaceDataReader {
 
@@ -21,33 +24,45 @@ public class RaceDataReader {
     }
 
     public List<Pigeon> getAllPigeons() throws IOException {
-        LinkedList<Pigeon> pigeonLinkedList = Files.readAllLines(Paths.get(filePath)).stream()
-                .map(line -> line.split(","))
-                .map(this::asPigeon)
-                .collect(Collector.of(() -> new LinkedList<Pigeon>(),
-                        LinkedList::add,
-                        (list1, list2) -> {
-                            LinkedList<Pigeon> objects = new LinkedList<>();
-                            objects.addAll(list1);
-                            objects.addAll(list2);
-                            return objects;
-                        }));
-        pigeonLinkedList.removeFirst();
-        return pigeonLinkedList;
+        return getListWithoutFirstRow(this::asPigeon);
     }
 
-
+    private List<String> removeFirstLineAndCheckIfNotNull() throws IOException {
+        List<String> stringLinkedList = Files.readAllLines(Paths.get(filePath));
+        if (stringLinkedList.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return stringLinkedList.subList(1, stringLinkedList.size());
+    }
+private <T> List<T> getListWithoutFirstRow(Function<String[], T> function) throws IOException {
+    List<T> tLinkedList = removeFirstLineAndCheckIfNotNull()
+            .stream()
+            .map(line -> line.split(","))
+            .map(function)
+            .collect(Collectors.toList());
+    return tLinkedList;
+}
     private Pigeon asPigeon(String[] splitLine) {
-        return Pigeon.builder().birdId(splitLine[2]).name(splitLine[3]).owner(splitLine[1]).build();
+        return Pigeon.builder()
+                .birdId(splitLine[2])
+                .name(splitLine[3])
+                .owner(splitLine[1])
+                .build();
     }
 
-    public List<ResultDTO> readListOfResults() {
-
+    public List<ResultDTO> readListOfResults() throws IOException {
+        return getListWithoutFirstRow(this::asResult);
     }
 
+    private Duration parseStringIntoDuration(String splitline) {
+        LocalTime splitLineParsedIntoLocalTime = LocalTime.parse(splitline, DateTimeFormatter.ofPattern("H:mm:ss"));
+        return Duration.between(LocalTime.MIN, splitLineParsedIntoLocalTime);
+    }
 
     private ResultDTO asResult(String[] splitLine) {
-        asPigeon(splitLine);
-        return ResultDTO.builder().identifier(splitLine[2]).time(Duration.parse()splitLine[7]).build();
+        return ResultDTO.builder()
+                .identifier(splitLine[2])
+                .time(parseStringIntoDuration(splitLine[9]))
+                .build();
     }
 }
