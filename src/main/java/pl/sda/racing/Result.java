@@ -14,10 +14,11 @@ public class Result {
 
     @ManyToOne
     private Pigeon pigeon;
-    @ManyToOne
+    @ManyToOne()
+    //@JoinColumn(name = "race_id")
     private Race race;
 
-    private Duration time;
+    //private Duration time;
 
 
 
