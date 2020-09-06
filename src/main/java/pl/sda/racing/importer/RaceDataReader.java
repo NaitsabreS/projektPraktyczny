@@ -17,15 +17,15 @@ public class RaceDataReader {
     }
 
     public List<Pigeon> getAllPigeons() throws IOException {
-        LinkedList<Pigeon> pigeonLinkedList= Files.readAllLines(Paths.get(filePath)).stream()
+        LinkedList<Pigeon> pigeonLinkedList = Files.readAllLines(Paths.get(filePath)).stream()
                 .map(line -> line.split(","))
-                .map(RaceDataReader::asPigeon)
+                .map(this::asPigeon)
                 .collect(Collector.of(() -> new LinkedList<Pigeon>(),
                         LinkedList::add,
                         (list1, list2) -> {
                             LinkedList<Pigeon> objects = new LinkedList<>();
-                                objects.addAll(list1);
-                                objects.addAll(list2);
+                            objects.addAll(list1);
+                            objects.addAll(list2);
                             return objects;
                         }));
         pigeonLinkedList.removeFirst();
@@ -33,7 +33,15 @@ public class RaceDataReader {
     }
 
 
-    private static Pigeon asPigeon(String[] splitLine) {
+    private Pigeon asPigeon(String[] splitLine) {
         return Pigeon.builder().birdId(splitLine[2]).name(splitLine[3]).owner(splitLine[1]).build();
+    }
+
+    public List<Result> readListOfResults() {
+
+    }
+
+    private Result asResult(String[] splitLine) {
+        return Result.builder().pigeon().race().time().build());
     }
 }
