@@ -1,7 +1,6 @@
 package pl.sda.racing.importer;
 
 import pl.sda.racing.Pigeon;
-import pl.sda.racing.Result;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,15 +26,18 @@ public class RaceDataReader {
         return getListWithoutFirstRow(this::asPigeon);
     }
 
-    private List<String> removeFirstLineAndCheckIfNotNull() throws IOException {
+    private List<String> readFileAsLines() throws IOException {
         List<String> stringLinkedList = Files.readAllLines(Paths.get(filePath));
+        return stringLinkedList;
+    }
+    private List<String> withoutFirstLine(List<String> stringLinkedList) {
         if (stringLinkedList.isEmpty()) {
             return Collections.emptyList();
         }
         return stringLinkedList.subList(1, stringLinkedList.size());
     }
-private <T> List<T> getListWithoutFirstRow(Function<String[], T> function) throws IOException {
-    List<T> tLinkedList = removeFirstLineAndCheckIfNotNull()
+    private <T> List<T> getListWithoutFirstRow(Function<String[], T> function) throws IOException {
+    List<T> tLinkedList = withoutFirstLine(readFileAsLines())
             .stream()
             .map(line -> line.split(","))
             .map(function)

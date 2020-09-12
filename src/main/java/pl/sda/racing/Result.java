@@ -16,15 +16,15 @@ import java.time.Duration;
 public class Result {
     @Id
     @GeneratedValue
-    private Long id;
+        private Long id;
 
-    @ManyToOne
-    private Pigeon pigeon;
-    @ManyToOne()
-    //@JoinColumn(name = "race_id")
-    private Race race;
+        @ManyToOne
+        private Pigeon pigeon;
+        @ManyToOne()
+        //@JoinColumn(name = "race_id")
+        private Race race;
 
-    private Duration time;
+        private Duration time;
 
 
 }
